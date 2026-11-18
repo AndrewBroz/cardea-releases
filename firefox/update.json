@@ -1,1 +1,18 @@
-{ "addons": {} }
+{
+  "addons": {
+    "cardea@andrewbroz.net": {
+      "updates": [
+        {
+          "version": "0.8.1",
+          "update_link": "https://andrewbroz.github.io/cardea-releases/firefox/cardea-0.8.1.xpi",
+          "update_hash": "sha256:09952fdaf9afad92d4d768d2e65a005ca93388250bd6c225c09d98d76b7465ee",
+          "applications": {
+            "gecko": {
+              "strict_min_version": "140.0"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,170 @@
+<!doctype html>
+<!-- Template for the releases repo's index.html, filled in by scripts/firefox-publish.mjs.
+     Placeholders: 0.8.1, 140. Visual language = the default
+     "monochrome calm" skin (src/skins/default/tokens.css.ts + monochrome-dark). -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Unlisted: shared by link, kept out of search results. -->
+    <meta name="robots" content="noindex" />
+    <title>Cardea for Firefox</title>
+    <link rel="icon" href="icon-128.png" />
+    <style>
+      @font-face {
+        font-family: "Schibsted Grotesk";
+        src: url("SchibstedGrotesk-Latin.woff2") format("woff2");
+        font-weight: 400 900;
+        font-display: swap;
+      }
+      :root {
+        --bg: #ffffff;
+        --fg: #111111;
+        --muted: #6b6b6b;
+        --divider: #dddddd;
+        --surface: #f6f6f6;
+        color-scheme: light dark;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #161616;
+          --fg: #ededed;
+          --muted: #9a9a9a;
+          --divider: #3a3a3a;
+          --surface: #222222;
+        }
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--fg);
+        font:
+          16px/1.55 "Schibsted Grotesk",
+          "Helvetica Neue",
+          Helvetica,
+          "Segoe UI",
+          system-ui,
+          sans-serif;
+      }
+      main {
+        max-width: 34rem;
+        margin: 0 auto;
+        padding: 72px 16px 48px;
+      }
+      header {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 20px;
+      }
+      header img {
+        width: 48px;
+        height: 48px;
+      }
+      h1 {
+        margin: 0;
+        font-size: 30px;
+        font-weight: 700;
+        letter-spacing: -0.01em;
+      }
+      .tagline {
+        margin: 0 0 14px;
+        font-size: 19px;
+        font-weight: 600;
+      }
+      p {
+        margin: 0 0 14px;
+      }
+      .install {
+        margin: 32px 0 8px;
+      }
+      .button {
+        display: inline-block;
+        padding: 10px 20px;
+        border: 1px solid var(--fg);
+        background: var(--fg);
+        color: var(--bg);
+        font-weight: 700;
+        text-decoration: none;
+        box-shadow: 2px 2px 0 0 var(--muted);
+      }
+      .button:hover {
+        background: var(--bg);
+        color: var(--fg);
+        box-shadow: 2px 2px 0 0 var(--fg);
+      }
+      .button:focus-visible {
+        outline: 2px solid var(--fg);
+        outline-offset: 3px;
+      }
+      .meta {
+        color: var(--muted);
+        font-size: 14px;
+      }
+      .note {
+        margin: 24px 0 0;
+        padding: 12px 14px;
+        border: 1px dashed var(--divider);
+        background: var(--surface);
+        font-size: 15px;
+      }
+      /* Emphasis stays monochrome: the foreground color, not a hue. */
+      .note.emphasis {
+        border-color: var(--fg);
+      }
+      ol {
+        margin: 6px 0 0;
+        padding-left: 1.3em;
+      }
+      footer {
+        margin-top: 40px;
+        padding-top: 14px;
+        border-top: 1px solid var(--divider);
+        color: var(--muted);
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <img src="icon-128.png" alt="" width="48" height="48" />
+        <h1>Cardea</h1>
+      </header>
+      <p class="tagline">Browse with intention.</p>
+      <p>
+        Before you open a distracting site, Cardea asks you to name your intention. It then
+        runs a session timer and makes the page less distracting. You choose the sites.
+      </p>
+
+      <p class="note emphasis" id="not-firefox" hidden>
+        This page installs the Firefox version. Open this link in Firefox on a computer.
+      </p>
+
+      <div class="install">
+        <a class="button" href="firefox/cardea.xpi">Add to Firefox</a>
+      </div>
+      <p class="meta">Version 0.8.1 · Firefox 140 or newer, desktop</p>
+
+      <div class="note">
+        Firefox will ask before installing:
+        <ol>
+          <li>Click <strong>Continue to Installation</strong>.</li>
+          <li>Click <strong>Add</strong>.</li>
+        </ol>
+      </div>
+
+      <footer>Signed by Mozilla. Cardea updates itself automatically.</footer>
+    </main>
+    <script>
+      // Firefox on Android can't install self-hosted add-ons, so it gets the note too.
+      const ua = navigator.userAgent;
+      if (!/Firefox\//.test(ua) || /Android/.test(ua)) {
+        document.getElementById("not-firefox").hidden = false;
+      }
+    </script>
+  </body>
+</html>
