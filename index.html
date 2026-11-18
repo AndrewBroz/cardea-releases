@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <!-- Unlisted: shared by link, kept out of search results. -->
     <meta name="robots" content="noindex" />
-    <title>Cardea for Firefox</title>
+    <title>Cardea</title>
     <link rel="icon" href="icon-128.png" />
     <style>
       @font-face {
@@ -104,6 +104,15 @@
         color: var(--muted);
         font-size: 14px;
       }
+      .other a {
+        color: var(--fg);
+        font-weight: 600;
+        text-underline-offset: 3px;
+      }
+      .other a:focus-visible {
+        outline: 2px solid var(--fg);
+        outline-offset: 2px;
+      }
       .note {
         margin: 24px 0 0;
         padding: 12px 14px;
@@ -141,13 +150,18 @@
       </p>
 
       <p class="note emphasis" id="not-firefox" hidden>
-        This page installs the Firefox version. Open this link in Firefox on a computer.
+        The Add to Firefox button needs Firefox on a computer. For Chrome, Edge, or Brave,
+        use the Chrome Web Store link below it.
       </p>
 
       <div class="install">
         <a class="button" href="firefox/cardea.xpi">Add to Firefox</a>
       </div>
       <p class="meta">Version 0.8.1 · Firefox 140 or newer, desktop</p>
+      <p class="other">
+        Using Chrome, Edge, or Brave?
+        <a href="https://chromewebstore.google.com/detail/cardea/mhlgelddkoekpfmdlocbjeckogdkefpc">Get Cardea from the Chrome Web Store</a>.
+      </p>
 
       <div class="note">
         Firefox will ask before installing:
