@@ -1,8 +1,12 @@
 <!doctype html>
 <!-- Template for the releases repo's index.html, filled in by scripts/firefox-publish.mjs.
-     Placeholders: 0.8.1, 140. Visual language = the default
-     "monochrome calm" skin (src/skins/default/tokens.css.ts + monochrome-dark). -->
-<html lang="en">
+     Placeholders: 0.8.1, 140, 114. Visual language = the
+     default "monochrome calm" skin (src/skins/default/tokens.css.ts + monochrome-dark).
+     One page, four variants picked from the user agent by the script at the bottom:
+     firefox | chrome | safari (coming soon) | other (not supported). ?browser=<variant>
+     overrides detection (cross-links + previews). Without JS, data-browser="all"
+     shows both install options. -->
+<html lang="en" data-browser="all">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -104,12 +108,14 @@
         color: var(--muted);
         font-size: 14px;
       }
-      .other a {
+      .other a,
+      ul.supported a {
         color: var(--fg);
         font-weight: 600;
         text-underline-offset: 3px;
       }
-      .other a:focus-visible {
+      .other a:focus-visible,
+      ul.supported a:focus-visible {
         outline: 2px solid var(--fg);
         outline-offset: 2px;
       }
@@ -128,6 +134,37 @@
         margin: 6px 0 0;
         padding-left: 1.3em;
       }
+      /* Variant switching: a section shows only when html[data-browser] is listed
+         in its data-variant. */
+      [data-variant] {
+        display: none;
+      }
+      html[data-browser="all"] [data-variant~="all"],
+      html[data-browser="firefox"] [data-variant~="firefox"],
+      html[data-browser="chrome"] [data-variant~="chrome"],
+      html[data-browser="safari"] [data-variant~="safari"],
+      html[data-browser="other"] [data-variant~="other"] {
+        display: block;
+      }
+      h2 {
+        margin: 32px 0 10px;
+        font-size: 19px;
+        font-weight: 700;
+      }
+      ul.supported {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        border-top: 1px solid var(--divider);
+      }
+      ul.supported li {
+        padding: 10px 0;
+        border-bottom: 1px solid var(--divider);
+      }
+      ul.supported .meta {
+        display: block;
+        margin-top: 2px;
+      }
       footer {
         margin-top: 40px;
         padding-top: 14px;
@@ -145,39 +182,112 @@
       </header>
       <p class="tagline">Browse with intention.</p>
       <p>
-        Before you open a distracting site, Cardea asks you to name your intention. It then
-        runs a session timer and makes the page less distracting. You choose the sites.
+        Before you open a potentially distracting site, Cardea asks you to name your
+        intention. It then runs a session timer and modifies the page to remove common
+        distractions.
       </p>
 
-      <p class="note emphasis" id="not-firefox" hidden>
-        The Add to Firefox button needs Firefox on a computer. For Chrome, Edge, or Brave,
-        use the Chrome Web Store link below it.
-      </p>
+      <p class="note emphasis" id="outdated" hidden></p>
 
-      <div class="install">
-        <a class="button" href="firefox/cardea.xpi">Add to Firefox</a>
-      </div>
-      <p class="meta">Version 0.8.1 · Firefox 140 or newer, desktop</p>
-      <p class="other">
-        Using Chrome, Edge, or Brave?
-        <a href="https://chromewebstore.google.com/detail/cardea/mhlgelddkoekpfmdlocbjeckogdkefpc">Get Cardea from the Chrome Web Store</a>.
-      </p>
+      <!-- Firefox (desktop) -->
+      <section data-variant="firefox all">
+        <h2 data-variant="all">Firefox</h2>
+        <div class="install">
+          <a class="button" href="firefox/cardea.xpi">Add to Firefox</a>
+        </div>
+        <p class="meta">Version 0.8.1 · Firefox 140 or newer, desktop</p>
+        <div class="note">
+          Firefox will ask before installing:
+          <ol>
+            <li>Click <strong>Continue to Installation</strong>.</li>
+            <li>Click <strong>Add</strong>.</li>
+          </ol>
+        </div>
+        <p class="other" data-variant="firefox">
+          Also available for
+          <a href="?browser=chrome">Chrome, Edge, and Brave</a>.
+        </p>
+        <footer data-variant="firefox">
+          Signed by Mozilla. Cardea updates itself automatically.
+        </footer>
+      </section>
 
-      <div class="note">
-        Firefox will ask before installing:
-        <ol>
-          <li>Click <strong>Continue to Installation</strong>.</li>
-          <li>Click <strong>Add</strong>.</li>
-        </ol>
-      </div>
+      <!-- Chrome and other Chromium browsers (desktop) -->
+      <section data-variant="chrome all">
+        <h2 data-variant="all">Chrome, Edge, and Brave</h2>
+        <div class="install">
+          <a class="button" href="https://chromewebstore.google.com/detail/cardea/mhlgelddkoekpfmdlocbjeckogdkefpc">Get it from the Chrome Web Store</a>
+        </div>
+        <p class="meta">
+          Chrome 114 or newer, desktop. Also works in Edge, Brave, and other
+          Chromium browsers.
+        </p>
+        <p class="other" data-variant="chrome">
+          Also available for <a href="?browser=firefox">Firefox</a>.
+        </p>
+        <footer data-variant="chrome">Cardea updates itself through the Chrome Web Store.</footer>
+      </section>
 
-      <footer>Signed by Mozilla. Cardea updates itself automatically.</footer>
+      <!-- Safari: not yet -->
+      <section data-variant="safari">
+        <h2>Safari version coming soon</h2>
+        <p>Cardea isn't available for Safari yet. In the meantime, it works in:</p>
+      </section>
+
+      <!-- Anything else: phones, tablets, other browsers -->
+      <section data-variant="other">
+        <h2>This browser isn't supported</h2>
+        <p>Cardea works in these browsers on a computer:</p>
+      </section>
+
+      <section data-variant="safari other">
+        <ul class="supported">
+          <li>
+            <a href="?browser=firefox">Firefox</a>
+            <span class="meta">Version 140 or newer</span>
+          </li>
+          <li>
+            <a href="?browser=chrome">Chrome</a>
+            <span class="meta">Version 114 or newer, plus Edge, Brave, and other Chromium browsers</span>
+          </li>
+          <li data-variant="other">
+            Safari
+            <span class="meta">Coming soon</span>
+          </li>
+        </ul>
+      </section>
     </main>
     <script>
-      // Firefox on Android can't install self-hosted add-ons, so it gets the note too.
-      const ua = navigator.userAgent;
-      if (!/Firefox\//.test(ua) || /Android/.test(ua)) {
-        document.getElementById("not-firefox").hidden = false;
+      // Pure: user agent → { variant, major }. Mobile and iPadOS-in-phone-mode go to
+      // "other" (no store or self-hosted install works there). Order matters: Edge,
+      // Opera, and Brave all carry "Chrome/"; Chrome on Mac carries "Safari/".
+      function cardeaDetect(ua) {
+        if (/Android|iPhone|iPad|iPod|Mobile/.test(ua)) return { variant: "other", major: null };
+        let m = ua.match(/Firefox\/(\d+)/);
+        if (m) return { variant: "firefox", major: Number(m[1]) };
+        m = ua.match(/Chrom(?:e|ium)\/(\d+)/);
+        if (m) return { variant: "chrome", major: Number(m[1]) };
+        if (/Macintosh/.test(ua) && /Version\/[\d.]+ Safari\//.test(ua))
+          return { variant: "safari", major: null };
+        return { variant: "other", major: null };
+      }
+
+      const MIN = { firefox: Number("140"), chrome: Number("114") };
+      const NAME = { firefox: "Firefox", chrome: "Chrome" };
+      const forced = new URLSearchParams(location.search).get("browser");
+      const detected = cardeaDetect(navigator.userAgent);
+      const variant = ["firefox", "chrome", "safari", "other"].includes(forced)
+        ? forced
+        : detected.variant;
+      document.documentElement.dataset.browser = variant;
+
+      // Same browser, too old: say so above the install button.
+      if (!forced && detected.major !== null && detected.major < MIN[variant]) {
+        const note = document.getElementById("outdated");
+        note.textContent =
+          `You're using ${NAME[variant]} ${detected.major}. Cardea needs version ` +
+          `${MIN[variant]} or newer, so update ${NAME[variant]} before installing.`;
+        note.hidden = false;
       }
     </script>
   </body>
